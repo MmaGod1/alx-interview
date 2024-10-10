@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module defines the canUnlockAll function to determine if all boxes 
+This module defines the canUnlockAll function to determine if all boxes
 in a list of locked boxes can be opened using keys found in the boxes.
 """
 
