@@ -20,6 +20,7 @@ def handle_interrupt(signum, frame):
     print_stats()
     sys.exit(0)
 
+
 signal.signal(signal.SIGINT, handle_interrupt)
 
 
