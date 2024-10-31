@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Read lines from standard input and compute metrics"""
-
 import sys
 
 
@@ -13,7 +12,7 @@ try:
     for line in sys.stdin:
         parts = line.split()
 
-        if len(parts) < 9 or parts[5] != '"GET' or parts[6] != '/projects/260' or parts[7] != 'HTTP/1.1"':
+        if len(parts) != 9 or parts[5] != '"GET' or parts[6] != '/projects/260' or parts[7] != 'HTTP/1.1"':
             continue
         
         # Extract the status code and file size
@@ -32,16 +31,16 @@ try:
         # Prints metrics every 10 lines
         if line_counter == 10:
             line_counter = 0
-            print('File size: {}'.format(total_file_size))
-            for code, count in sorted(status_counts.items()):
-                if count > 0:
-                    print('{}: {}'.format(code, count))
+            print('Total file size: File size: {}'.format(total_file_size))
+            for code in sorted(status_counts.keys()):
+                if status_counts[code] > 0:
+                    print('{}: {}'.format(code, status_counts[code]))
 
 except KeyboardInterrupt:
     pass
 
 finally:
-    print('File size: {}'.format(total_file_size))
-    for code, count in sorted(status_counts.items()):
-        if count > 0:
-            print('{}: {}'.format(code, count))
+    print('Total file size: File size: {}'.format(total_file_size))
+    for code in sorted(status_counts.keys()):
+        if status_counts[code] > 0:
+            print('{}: {}'.format(code, status_counts[code]))
