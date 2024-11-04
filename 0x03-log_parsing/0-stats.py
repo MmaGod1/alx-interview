@@ -15,7 +15,7 @@ try:
     for line in sys.stdin:
         line = line.strip()
         match = log_pattern.match(line)
-
+        
         if match:
             status = match.group('status')
             file_size = int(match.group('size'))
@@ -33,7 +33,7 @@ try:
                     if status_count[code] > 0:
                         print(f"{code}: {status_count[code]}")
 
-except (KeyboardInterrupt, ValueError):
+except KeyboardInterrupt:
     pass
 finally:
     print(f"File size: {add_file_size}")
