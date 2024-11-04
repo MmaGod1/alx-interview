@@ -2,12 +2,6 @@
 """Reads stdin line by line and computes metrics"""
 import sys
 
-
-#!/usr/bin/python3
- """Reads stdin line by line and computes metrics"""
-import sys
-
-
 count_line = 0
 add_file_size = 0
 status_count = {'200': 0, '301': 0, '400': 0, '401': 0,
