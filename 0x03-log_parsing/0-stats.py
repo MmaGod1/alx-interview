@@ -1,42 +1,37 @@
 #!/usr/bin/python3
-"""Reads stdin line by line and computes metrics"""
+'''a script that reads stdin line by line and computes metrics'''
+
+
 import sys
-import re
 
-
-count_line = 0
-add_file_size = 0
-status_count = {'200': 0, '301': 0, '400': 0, '401': 0,
-                '403': 0, '404': 0, '405': 0, '500': 0}
-
-log_pattern = re.compile(r'^(?P<ip>[\d\.]+) - \[(?P<date>[^\]]+)\] "GET /projects/260 HTTP/1\.1" (?P<status>\d{3}) (?P<size>\d+)$')
+cache = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
+total_size = 0
+counter = 0
 
 try:
     for line in sys.stdin:
-        line = line.strip()
-        match = log_pattern.match(line)
-        
-        if match:
-            status = match.group('status')
-            file_size = int(match.group('size'))
+        line_list = line.split(" ")
+        if len(line_list) > 4:
+            code = line_list[-2]
+            size = int(line_list[-1])
+            if code in cache.keys():
+                cache[code] += 1
+            total_size += size
+            counter += 1
 
-            count_line += 1
-            add_file_size += file_size
+        if counter == 10:
+            counter = 0
+            print('File size: {}'.format(total_size))
+            for key, value in sorted(cache.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
 
-            if status in status_count:
-                status_count[status] += 1
-
-            # Print metrics every 10 lines
-            if count_line % 10 == 0:
-                print(f"File size: {add_file_size}")
-                for code in sorted(status_count.keys()):
-                    if status_count[code] > 0:
-                        print(f"{code}: {status_count[code]}")
-
-except KeyboardInterrupt:
+except Exception as err:
     pass
+
 finally:
-    print(f"File size: {add_file_size}")
-    for code in sorted(status_count.keys()):
-        if status_count[code] > 0:
-            print(f"{code}: {status_count[code]}")
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(cache.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
