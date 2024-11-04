@@ -14,7 +14,7 @@ try:
         line_str = line.split()
         
         if len(line_str) > 7:
-            status = int(line_str[-2])
+            status = line_str[-2]
             file_size = int(line_str[-1])
 
             count_line += 1
@@ -29,7 +29,7 @@ try:
                     if status_count[code] > 0:
                         print(f"{code}: {status_count[code]}")
 
-except KeyboardInterrupt:
+except Exception:
     pass
 finally:
     print(f"File size: {add_file_size}")
