@@ -4,8 +4,8 @@ import sys
 
 count_line = 0
 add_file_size = 0
-status_count = {200: 0, 301: 0, 400: 0, 401: 0,
-                403: 0, 404: 0, 405: 0, 500: 0}
+status_count = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
 
 try:
     for line in sys.stdin:
@@ -13,7 +13,7 @@ try:
         line_str = line.split()
 
         if len(line_str) > 7:
-            status = int(line_str[-2])
+            status = line_str[-2]
             file_size = int(line_str[-1])
 
             count_line += 1
