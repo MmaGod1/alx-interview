@@ -21,14 +21,14 @@ try:
             line_list = line.split()
             if len(line_list) < 9:
                 continue
-            
+
             # Extract status code and file size
             try:
                 code = line_list[-2]
                 size = int(line_list[-1])
             except (ValueError, IndexError):
                 continue
-            
+
             # Update metrics
             if code in cache:
                 cache[code] += 1
