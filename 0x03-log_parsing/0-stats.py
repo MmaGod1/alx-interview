@@ -13,8 +13,8 @@ try:
         line_str = line.split()
 
         if len(line_str) > 7:
-            status = int(line_str[6])
-            file_size = int(line_str[7])
+            status = int(line_str[-2])
+            file_size = int(line_str[-1])
 
             count_line += 1
             add_file_size += file_size
