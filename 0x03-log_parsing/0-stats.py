@@ -1,5 +1,6 @@
+#!/usr/bin/python3
 import sys
-"""Rads stdin line by line and computes metrics"""
+"""Reads stdin line by line and computes metrics"""
 
 
 count_line = 0
