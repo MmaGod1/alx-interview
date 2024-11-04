@@ -28,7 +28,7 @@ try:
                     if status_count[code] > 0:
                         print(f"{code}: {status_count[code]}")
 
-except KeyboardInterrupt:
+except (KeyboardInterrupt, ValueError):
     pass
 finally:
     print(f"File size: {add_file_size}")
