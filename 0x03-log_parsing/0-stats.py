@@ -1,37 +1,40 @@
 #!/usr/bin/python3
-'''a script that reads stdin line by line and computes metrics'''
-
-
+"""Reads stdin line by line and computes metrics"""
 import sys
 
-cache = {'200': 0, '301': 0, '400': 0, '401': 0,
-         '403': 0, '404': 0, '405': 0, '500': 0}
-total_size = 0
-counter = 0
+count_line = 0
+add_file_size = 0
+status_count = {'200': 0, '301': 0, '400': 0, '401': 0,
+                '403': 0, '404': 0, '405': 0, '500': 0}
 
 try:
     for line in sys.stdin:
-        line_list = line.split(" ")
-        if len(line_list) > 4:
-            code = line_list[-2]
-            size = int(line_list[-1])
-            if code in cache.keys():
-                cache[code] += 1
-            total_size += size
-            counter += 1
+        line = line.strip()
+        line_parts = line.split(" ")
+        if len(line_parts) >= 5:
+            try:
+                status = line_parts[-2]
+                file_size = int(line_parts[-1])
 
-        if counter == 10:
-            counter = 0
-            print('File size: {}'.format(total_size))
-            for key, value in sorted(cache.items()):
-                if value != 0:
-                    print('{}: {}'.format(key, value))
+                if status in status_count:
+                    status_count[status] += 1
+                add_file_size += file_size
+                count_line += 1
 
-except Exception as err:
+                if count_line % 10 == 0:
+                    print(f"File size: {add_file_size}")
+                    for code in sorted(status_count.keys()):
+                        if status_count[code] > 0:
+                            print(f"{code}: {status_count[code]}")
+
+            except (ValueError, IndexError):
+                # Skip lines that can't be processed correctly
+                continue
+
+except KeyboardInterrupt:
     pass
-
 finally:
-    print('File size: {}'.format(total_size))
-    for key, value in sorted(cache.items()):
-        if value != 0:
-            print('{}: {}'.format(key, value))
+    print(f"File size: {add_file_size}")
+    for code in sorted(status_count.keys()):
+        if status_count[code] > 0:
+            print(f"{code}: {status_count[code]}")
