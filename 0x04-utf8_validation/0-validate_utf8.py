@@ -8,7 +8,7 @@ def validUTF8(data):
     Return: True or False if data is UTF-8 encoding or not.
     """
     # Number of bytes remaining to complete the current character
-    remain_bytes = 0
+    remaining_bytes = 0
     
     for byte in data:
         # Only consider the last 8 bits of each integer (0–255)
