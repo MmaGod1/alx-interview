@@ -9,11 +9,11 @@ def validUTF8(data):
     """
     # Number of bytes remaining to complete the current character
     remaining_bytes = 0
-    
+
     for byte in data:
         # Only consider the last 8 bits of each integer (0–255)
         byte = byte & 0xFF
-        
+
         if remaining_bytes == 0:
             # Determine the number of bytes for the new character
             if (byte >> 5) == 0b110:
