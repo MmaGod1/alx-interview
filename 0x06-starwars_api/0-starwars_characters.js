@@ -12,7 +12,7 @@ if (!movieId) {
 // API endpoint for the Star Wars films
 const url = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
 
-// Make a request to get the film details
+// Fetch the film details
 request(url, (err, res, body) => {
   if (err) {
     console.error(err);
@@ -26,9 +26,12 @@ request(url, (err, res, body) => {
   const film = JSON.parse(body);
   const characters = film.characters;
 
-  // Fetch and display characters in order
-  characters.forEach((characterUrl) => {
-    request(characterUrl, (charErr, charRes, charBody) => {
+  // Function to process requests sequentially
+  const fetchCharacter = (index) => {
+    if (index >= characters.length) {
+      return;
+    }
+    request(characters[index], (charErr, charRes, charBody) => {
       if (charErr) {
         console.error(charErr);
         return;
@@ -36,7 +39,12 @@ request(url, (err, res, body) => {
       if (charRes.statusCode === 200) {
         const character = JSON.parse(charBody);
         console.log(character.name);
+        // Recursively fetch the next character
+        fetchCharacter(index + 1);
       }
     });
-  });
+  };
+
+  // Start fetching characters from the first one
+  fetchCharacter(0);
 });
