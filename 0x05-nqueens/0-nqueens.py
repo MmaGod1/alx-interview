@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Solve N Queens problem. """"
+""" Solve N Queens problem. """
 
 
 def place_Q(n, row, columns, r_diag, l_diag, res, board):
@@ -9,7 +9,8 @@ def place_Q(n, row, columns, r_diag, l_diag, res, board):
         return
 
     for col in range(n):
-        if col not in columns and (row + col) not in r_diag and (row - col) not in l_diag:
+        if col not in columns and (row + col) not in r_diag and \
+                (row - col) not in l_diag:
             # Place the queen
             columns.add(col)
             r_diag.add(row + col)
