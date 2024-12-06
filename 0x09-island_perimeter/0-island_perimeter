@@ -3,7 +3,7 @@
 """
 
 
-def island_perimeter_original(grid):
+def island_perimeter(grid):
     """ Calculates an island primeter. """
     perimeter = 0
     for i in range(len(grid)):
